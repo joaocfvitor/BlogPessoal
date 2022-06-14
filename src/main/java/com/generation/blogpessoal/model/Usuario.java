@@ -16,30 +16,44 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table (name = "tb_usuario")
+@Table(name = "tb_usuario")
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull (message = "O atributo Nome é obrigatório!")
+
+	@NotNull(message = "O atributo Nome é obrigatório!")
 	private String nome;
-	
-	@NotNull (message = "O atributo Usuário é obrigatório!")
+
+	@NotNull(message = "O atributo Usuário é obrigatório!")
 	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
-	
+
 	@NotNull
 	@Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres!")
 	private String senha;
-	
-	
+
 	private String foto;
-	
-	@OneToMany (mappedBy = "usuario", cascade = CascadeType.REMOVE)
+
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
+
+	// Primeiro método Construtor
+
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+
+	// Segundo método Construtor
+
+	public Usuario() {
+	}
 
 	public Long getId() {
 		return id;
@@ -88,5 +102,5 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
+
 }
